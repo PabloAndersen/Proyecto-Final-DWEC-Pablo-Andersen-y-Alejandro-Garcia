@@ -1,0 +1,60 @@
+<%- include("Template/cabecera", {tituloweb: "Pagina de inicio" }) %>
+  <div class="container">
+    <br>
+    <h1>LISTA DE RÍOS</h1>
+    <a class="btn btn-success btn-block my-4" href="/rio/crearRio">Registrar nuevo río</a>
+    <hr>
+    <div class="table-responsive">
+      <table class="table align-middle table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ubicacion</th>
+            <th scope="col">Longitud</th>
+            <th scope="col">Numero de participantes</th>
+            <th scope="col" class="accion">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (arrayRio.length> 0) { %>
+            <% arrayRio.forEach(rio=> { %>
+              <tr>
+                <th scope="row">
+                  <%= rio.id %>
+                </th>
+                <td>
+                  <%= rio.nombre %>
+                </td>
+                <td>
+                  <%= rio.ubicacion %>
+                </td>
+                <td>
+                  <%= rio.longitud %>
+                </td>
+                <td>
+                  <%= rio.numero_personas %>
+                </td>
+                <td>
+                  <a class="btn btn-warning btn-sm" href="rio/<%= rio.id %>">Editar/Eliminar</a>
+                </td>
+              </tr>
+              <% }) %>
+                <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div>
+        <h2>INFORMATE SOBRE NUESTROS EVENTOS</h2>
+      </div>
+      <div class="col-md-12">
+        <img style='float:left;width:auto;height:200px; margin-right:10px;' src="/images/rioImagen.jpg" alt="rio"/>
+        <h3 class="texto">Lots of text here...With the four tiers of grids available you're bound to run into issues
+          where, at certain breakpoints, your columns don't clear quite right as one is taller than the other. To fix
+          that, use a combination of a .clearfix and o</h3>
+      </div>
+    </div>
+
+  </div>
+  <%- include("Template/footer") %>

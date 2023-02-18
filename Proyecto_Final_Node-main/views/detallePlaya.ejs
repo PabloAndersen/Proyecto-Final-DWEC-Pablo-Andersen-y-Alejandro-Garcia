@@ -1,0 +1,87 @@
+<%- include("Template/cabecera", {tituloweb: 'Detalles del lago' }) %>
+    <% if (error) { %>
+        <%= mensaje %>
+            <a href="/playa" class="btn btn-dark btn-block my-2">
+                Volver
+            </a>
+            <% } %>
+                <% if (!error) { %>
+                    <div class="container">
+                        <div class="bg">
+                            <table class="table">
+                                <h1 class="h1">Detalles de la playa</h1>
+                                <br>
+                                <tbody>
+                                    <% if (!error) { %>
+                                        <form id="editar" data-id="<%= playa.id %>">
+                                            <input type="text" value="<%= playa.nombre %>" class="fila" name="nombre"
+                                                id="nombreInput">
+                                            <input type="text" value="<%= playa.ubicacion %>" class="fila" name="ubicacion"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= playa.longitud %>" class="fila"
+                                                name="longitud" id="descripcionInput">
+                                                <input type="text" value="<%= playa.numero_personas %>" class="fila"
+                                                name="numero_personas" id="descripcionInput">
+                                            <button class="btn3 btn-warning btn-sm" type="submit">
+                                                Editar
+                                            </button>
+                                            <button class="btn3 btn-danger btn-sm" data-id="<%= playa.id %>">
+                                                Eliminar
+                                            </button>
+                                        </form>
+
+                                        <% } %>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <%- include("template/footer") %>
+                            <script>
+                                const btnEliminar = document.querySelector('.btn-danger')
+                                btnEliminar.addEventListener('click', async () => {
+                                    console.log(btnEliminar.dataset.id)
+                                    try {
+                                        // https://developer.mozilla.org/es/docs/Web/API/HTMLElement/dataset
+                                        const data = await fetch(`/playa/${btnEliminar.dataset.id}`, {
+                                            method: 'delete'
+                                        })
+                                        const res = await data.json()
+                                        console.log(res)
+                                        if (res.estado) {
+                                            window.location.href = '/playa'
+                                        } else {
+                                            console.log(res)
+                                        }
+                                    } catch (error) {
+                                        console.log(error)
+                                    }
+                                })
+
+                                const formEditar = document.querySelector('#editar');
+                                formEditar.addEventListener('submit', async (e) => {
+                                    e.preventDefault()
+                                    const nombre = formEditar.elements['nombre'].value
+                                    const ubicacion = formEditar.elements['ubicacion'].value
+                                    const longitud = formEditar.elements['longitud'].value
+                                    const numero_personas = formEditar.elements['numero_personas'].value
+                                    const id = formEditar.dataset.id
+                                    const data = await fetch(`/playa/${id}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ nombre, ubicacion, longitud, numero_personas })
+                                    })
+                                    const res = await data.json()
+                                    if (res.estado) {
+                                        window.location.href = '/playa'
+                                    } else {
+                                        console.log(res)
+                                    }
+                                })
+
+                            </script>

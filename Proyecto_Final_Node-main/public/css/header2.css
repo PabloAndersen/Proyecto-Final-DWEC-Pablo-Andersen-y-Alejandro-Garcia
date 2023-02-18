@@ -1,0 +1,28 @@
+body {
+    background-image: url("/images/fondo.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+div{
+    height: 180px;
+    width: 100px;
+    margin: calc(50vh - 90px);
+}
+.btn3{
+    text-decoration: none;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 4%;
+    margin-left: 6%;  
+    border: none; 
+}
+.container{
+    background-color: rgba(255, 255, 255, 0.233);
+}
+img{
+    background-color: rgba(255, 255, 255, 0.5); 
+}

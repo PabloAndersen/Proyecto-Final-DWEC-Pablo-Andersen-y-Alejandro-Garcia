@@ -1,0 +1,49 @@
+body {
+    background-image: url("/images/fondo.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.primParte{
+    margin-left: calc(50vw - 250px);
+    margin-top: calc(50vh - 150px);
+    width: 300px;
+    height: 150px;
+    border-radius: 1px;
+}
+table{
+    border: 1px solid;
+    background-color: rgba(237, 255, 210, 0.493);
+    width: 500px;
+}
+
+h3{
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+form{
+    margin-left: 25%;
+}
+.btn4{
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+}
+.btn:hover{
+    background-color: rgba(118, 143, 143, 0.555);
+    width: 100%;
+}
+.desaparece{
+    display: none;
+}
+.aparece{
+    display: initial;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin-left: 42%;
+}

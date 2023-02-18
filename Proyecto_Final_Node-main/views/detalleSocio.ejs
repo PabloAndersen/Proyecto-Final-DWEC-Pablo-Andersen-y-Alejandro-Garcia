@@ -1,0 +1,93 @@
+<%- include("Template/cabecera", {tituloweb: 'Detalles del lago' }) %>
+    <% if (error) { %>
+        <%= mensaje %>
+            <a href="/socio" class="btn btn-dark btn-block my-2">
+                Volver
+            </a>
+            <% } %>
+                <% if (!error) { %>
+                    <div class="container">
+                        <div class="bg">
+                            <table class="table">
+                                <h1 class="h1">Detalles del socio</h1>
+                                <br>
+                                <tbody>
+                                    <% if (!error) { %>
+                                        <form id="editar" data-id="<%= socio.id %>">
+                                            <input type="text" value="<%= socio.nombre %>" class="fila" name="nombre"
+                                                id="nombreInput">
+                                            <input type="text" value="<%= socio.apellidos %>" class="fila" name="apellidos"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= socio.dni %>" class="fila" name="dni"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= socio.telefono %>" class="fila" name="telefono"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= socio.direccion %>" class="fila" name="direccion"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= socio.codigo_postal %>" class="fila" name="codigo_postal"
+                                                id="tipoInput">
+                                            <button class="btn3 btn-warning btn-sm" type="submit">
+                                                Editar
+                                            </button>
+                                            <button class="btn3 btn-danger btn-sm" data-id="<%= socio.id %>">
+                                                Eliminar
+                                            </button>
+                                        </form>
+
+                                        <% } %>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <%- include("template/footer") %>
+                            <script>
+                                const btnEliminar = document.querySelector('.btn-danger')
+                                btnEliminar.addEventListener('click', async () => {
+                                    console.log(btnEliminar.dataset.id)
+                                    try {
+                                        // https://developer.mozilla.org/es/docs/Web/API/HTMLElement/dataset
+                                        const data = await fetch(`/socio/${btnEliminar.dataset.id}`, {
+                                            method: 'delete'
+                                        })
+                                        const res = await data.json()
+                                        console.log(res)
+                                        if (res.estado) {
+                                            window.location.href = '/socio'
+                                        } else {
+                                            console.log(res)
+                                        }
+                                    } catch (error) {
+                                        console.log(error)
+                                    }
+                                })
+
+                                const formEditar = document.querySelector('#editar');
+                                formEditar.addEventListener('submit', async (e) => {
+                                    e.preventDefault()
+                                    const nombre = formEditar.elements['nombre'].value
+                                    const apellidos = formEditar.elements['apellidos'].value
+                                    const dni = formEditar.elements['dni'].value
+                                    const telefono = formEditar.elements['telefono'].value
+                                    const direccion = formEditar.elements['direccion'].value
+                                    const codigo_postal = formEditar.elements['codigo_postal'].value
+                                    const id = formEditar.dataset.id
+                                    const data = await fetch(`/socio/${id}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ nombre, apellidos, dni, telefono, direccion, codigo_postal })
+                                    })
+                                    const res = await data.json()
+                                    if (res.estado) {
+                                        window.location.href = '/socio'
+                                    } else {
+                                        console.log(res)
+                                    }
+                                })
+
+                            </script>

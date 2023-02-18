@@ -1,0 +1,87 @@
+<%- include("Template/cabecera", {tituloweb: 'Detalles del rio' }) %>
+    <% if (error) { %>
+        <%= mensaje %>
+            <a href="/rio" class="btn btn-dark btn-block my-2">
+                Volver
+            </a>
+            <% } %>
+                <% if (!error) { %>
+                    <div class="container">
+                        <div class="bg">
+                            <table class="table">
+                                <h1 class="h1">Detalles del Rio</h1>
+                                <br>
+                                <tbody>
+                                    <% if (!error) { %>
+                                        <form id="editar" data-id="<%= rio.id %>">
+                                            <input type="text" value="<%= rio.nombre %>" class="fila" name="nombre"
+                                                id="nombreInput">
+                                            <input type="text" value="<%= rio.ubicacion %>" class="fila" name="ubicacion"
+                                                id="tipoInput">
+                                            <input type="text" value="<%= rio.longitud %>" class="fila"
+                                                name="longitud" id="descripcionInput">
+                                                <input type="text" value="<%= rio.numero_personas %>" class="fila"
+                                                name="numero_personas" id="descripcionInput">
+                                            <button class="btn3 btn-warning btn-sm" type="submit">
+                                                Editar
+                                            </button>
+                                            <button class="btn3 btn-danger btn-sm" data-id="<%= rio.id %>">
+                                                Eliminar
+                                            </button>
+                                        </form>
+
+                                        <% } %>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <%- include("template/footer") %>
+                            <script>
+                                const btnEliminar = document.querySelector('.btn-danger')
+                                btnEliminar.addEventListener('click', async () => {
+                                    console.log(btnEliminar.dataset.id)
+                                    try {
+                                        // https://developer.mozilla.org/es/docs/Web/API/HTMLElement/dataset
+                                        const data = await fetch(`/rio/${btnEliminar.dataset.id}`, {
+                                            method: 'delete'
+                                        })
+                                        const res = await data.json()
+                                        console.log(res)
+                                        if (res.estado) {
+                                            window.location.href = '/rio'
+                                        } else {
+                                            console.log(res)
+                                        }
+                                    } catch (error) {
+                                        console.log(error)
+                                    }
+                                })
+
+                                const formEditar = document.querySelector('#editar');
+                                formEditar.addEventListener('submit', async (e) => {
+                                    e.preventDefault()
+                                    const nombre = formEditar.elements['nombre'].value
+                                    const ubicacion = formEditar.elements['ubicacion'].value
+                                    const longitud = formEditar.elements['longitud'].value
+                                    const numero_personas = formEditar.elements['numero_personas'].value
+                                    const id = formEditar.dataset.id
+                                    const data = await fetch(`/rio/${id}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ nombre, ubicacion, longitud, numero_personas })
+                                    })
+                                    const res = await data.json()
+                                    if (res.estado) {
+                                        window.location.href = '/rio'
+                                    } else {
+                                        console.log(res)
+                                    }
+                                })
+
+                            </script>
